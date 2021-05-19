@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-
+//Wayland's change
 class Database {
     // DB connection parameters
     private $host = 'localhost';
