@@ -15,7 +15,7 @@ if (isset($_POST['logout'])) {
 }
 
 // get text_files directory above current working directory (views)
-$dir = getcwd() . "/../incidents/";
+$dir = getcwd() . "/..";
 $viewFile = '';
 $editFile = '';
 
