@@ -61,7 +61,6 @@ if (isset($_POST['delete'])) {
             <td><?php echo $user->getUserId(); ?></td>
             <td><?php echo $user->getFirstName(); ?></td>
             <td><?php echo $user->getLastName(); ?></td>
-            <td><?php echo $user->getHireDate(); ?></td>
             <td><?php echo $user->getEMail(); ?></td>
             <td><?php echo $user->getExtension(); ?></td>
             <td><?php echo $user->getUserLevel()->getLevelName(); ?></td>
