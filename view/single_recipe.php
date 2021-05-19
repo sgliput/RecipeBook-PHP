@@ -26,9 +26,6 @@ if (isset($_POST['logout'])) {
         <li>
             <h3><a href="./file_upload.php">Manage Incidents</a></h3>
         </li>
-        <li>
-            <h3><a href="./db_conn_status.php">View DB Status</a></h3>
-        </li>
     </ul>
 
     <form method='POST'>
