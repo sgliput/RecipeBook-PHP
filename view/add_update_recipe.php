@@ -129,11 +129,6 @@
             <?php if (strlen($last_name_error) > 0)
                 echo "<span style='color: red;'>{$last_name_error}</span>"; ?>
         </h3>
-        <h3>Hire Date: <input type="date" name="hireDate"
-            value="<?php echo $user->getHireDate(); ?>">
-            <?php if (strlen($hire_date_error) > 0)
-                echo "<span style='color: red;'>{$hire_date_error}</span>"; ?>
-        </h3>
         <h3>E-Mail: <input type="text" name="email"
             value="<?php echo $user->getEMail(); ?>">
             <?php if (strlen($email_error) > 0)
@@ -144,15 +139,15 @@
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Level: <select name="userLevelOption">
-            <?php foreach($user_levels as $user_level) : ?>
-                <option value="<?php echo $user_level->getUserLevelNo(); ?>"
-                    <?php if ($user_level->getUserLevelNo() === $user->getUserLevel()->getUserLevelNo()) {
+        <!-- <h3>Level: <select name="userLevelOption">
+            <//?php foreach($user_levels as $user_level) : ?>
+                <option value="<//?php echo $user_level->getUserLevelNo(); ?>"
+                    <//?php if ($user_level->getUserLevelNo() === $user->getUserLevel()->getUserLevelNo()) {
                         echo 'selected'; }?>>
-                <?php echo $user_level->getLevelName(); ?></option>
-            <?php endforeach ?>
+                <//?php echo $user_level->getLevelName(); ?></option>
+            <//?php endforeach ?>
             </select>
-        </h3>        
+        </h3>         -->
         <input type="hidden"
             value="<?php echo $user->getUserNo(); ?>" name="userNo">
         <input type="submit" value="Save" name="save">
