@@ -5,26 +5,15 @@ namespace Controllers;
 class User {
     // properties - match the columns in the users table
     private $userNo;
-    private $userId;
+    private $username;
+    private $userEmail;
     private $password;
-    private $firstName;
-    private $lastName;
-    private $hireDate;
-    private $eMail;
-    private $extension;
-    private $userLevel;
 
-    public function __construct($userId = null, $password, $firstName, $lastName, $hireDate, 
-        $eMail, $extension, $userLevel)
+    public function __construct($username = null, $email, $password)
     {
-        $this->userId = $userId;
+        $this->username = $username;
+        $this->userEmail = $email;
         $this->password = $password;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->hireDate = $hireDate;
-        $this->eMail = $eMail;
-        $this->extension = $extension;
-        $this->userLevel = $userLevel;
     }
 
     // get and set the user properties
@@ -35,60 +24,24 @@ class User {
         $this->userNo = $value;
     }
 
-    public function getUserId() {
-        return $this->userId;
+    public function getUsername() {
+        return $this->username;
     }
-    public function setUserId($value) {
-        $this->userId = $value;
+    public function setUsername($value) {
+        $this->username = $value;
     }
 
-    public function getPassword() {
+    public function getUserEmail() {
+        return $this->userEmail;
+    }
+    public function setUserEmail($value) {
+        $this->userEmail = $value;
+    }
+
+    public function getUserPassword() {
         return $this->password;
     }
-    public function setPassword($value) {
+    public function setUserPassword($value) {
         $this->password = $value;
-    }
-
-    public function getFirstName() {
-        return $this->firstName;
-    }
-    public function setFirstName($value) {
-        $this->firstName = $value;
-    }
-
-    public function getLastName() {
-        return $this->lastName;
-    }
-    public function setLastName($value) {
-        $this->lastName = $value;
-    }
-
-    public function getHireDate() {
-        return $this->hireDate;
-    }
-    public function setHireDate($value) {
-        $this->hireDate = $value;
-    }
-
-    public function getEMail() {
-        return $this->eMail;
-    }
-    public function setEMail($value) {
-        $this->eMail = $value;
-    }
-
-    public function getExtension() {
-        return $this->extension;
-    }
-    public function setExtension($value) {
-        $this->extension = $value;
-    }
-
-    // get and set the user level property
-    public function getUserLevel() {
-        return $this->userLevel;
-    }
-    public function setUserLevel($value) {
-        $this->userLevel = $value;
     }
 }

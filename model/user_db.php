@@ -15,9 +15,7 @@ class UsersDB {
         if ($dbConn) {
             // create the query string
             $query = 'SELECT *
-                      FROM users
-                      INNER JOIN user_levels
-                      ON users.UserLevelNo = user_levels.UserLevelNo';
+                      FROM users';
 
             // execute the query
             return $dbConn->query($query);
@@ -26,8 +24,8 @@ class UsersDB {
         }
     }
 
-    // function to get a user by their userId
-    public static function getUserByUserId($userId)
+    // function to get a user by their username
+    public static function getUserByUsername($username)
     {
         // get the DB connection
         $db = new Database();
@@ -37,9 +35,7 @@ class UsersDB {
             // create the query string
             $query = "SELECT *
                       FROM users
-                      INNER JOIN user_levels
-                      ON users.UserLevelNo = user_levels.UserLevelNo
-                      WHERE users.userId = '$userId'";
+                      WHERE users.username = '$username'";
 
             // execute the query - returns false if no such email found
             $result = $dbConn->query($query);
@@ -59,35 +55,12 @@ class UsersDB {
             // create the query string
             $query = "SELECT *
                       FROM users
-                      INNER JOIN user_levels
-                      ON users.UserLevelNo = user_levels.UserLevelNo
                       WHERE users.userNo = '$userNo'";
             
             // execute the query
             $result = $dbConn->query($query);
             // return the associative array
             return $result->fetch_assoc();
-        } else {
-            return false;
-        }
-    }
-
-    // function to get all users in a specific user level;
-    // returns false if the database connection fails
-    public static function getUsersByLevel($userLevelNo) {
-        // get the DB connection
-        $db = new Database();
-        $dbConn = $db->getDbConn();
-
-        if ($dbConn) {
-            // create the query string
-            $query = "SELECT * FROM users
-                      INNER JOIN user_levels
-                      ON users.UserLevelNo = user_levels.UserLevelNo'
-                      WHERE users.UserLevelNo = '$userLevelNo'";
-            
-            // execute the query
-            return $dbConn->query($query);
         } else {
             return false;
         }
@@ -115,14 +88,9 @@ class UsersDB {
 
     // function to add a user to the DB; returns true on success, false on failure or DB connection failure
     public static function addUser(
-        $userId,
-        $password,
-        $fName,
-        $lName,
-        $hireDate,
-        $eMail,
-        $extension,
-        $userLevelNo
+        $username,
+        $email,
+        $password
     ) {
         // get the database connection
         $db = new Database();
@@ -131,8 +99,8 @@ class UsersDB {
         if ($dbConn) {
 
             // create the query string - UserNo is an auto-increment field, so no need to specify it
-            $query = "INSERT INTO users (UserId, Password, FirstName, LastName, HireDate, EMail, Extension, UserLevelNo)
-                      VALUES ('$userId', '$password', '$fName', '$lName', '$hireDate', '$eMail', '$extension', '$userLevelNo')";
+            $query = "INSERT INTO users (Username, UserEmail, UserPassword)
+                      VALUES ('$username', '$email', '$password')";
 
             // execute the query, returning status
             return $dbConn->query($query) === TRUE;
@@ -144,14 +112,9 @@ class UsersDB {
     // function to update a user's information; returns true on success, false on failure or DB connection failure
     public static function updateUser(
         $userNo,
-        $userId,
-        $password,
-        $fName,
-        $lName,
-        $hireDate,
-        $eMail,
-        $extension,
-        $userLevelNo
+        $username,
+        $email,
+        $password
     ) {
         // get the database connection
         $db = new Database();
@@ -160,14 +123,9 @@ class UsersDB {
         if ($dbConn) {
             // create the query string
             $query = "UPDATE users SET
-                            UserId = '$userId',
-                            Password = '$password',
-                            FirstName = '$fName',
-                            LastName = '$lName',
-                            HireDate = '$hireDate',
-                            EMail = '$eMail',
-                            Extension = '$extension',
-                            UserLevelNo = '$userLevelNo'
+                            Username = '$username',
+                            UserEmail = '$email',
+                            UserPassword = '$password',
                           WHERE UserNo = '$userNo'";
             // execute the query, returning status
             return $dbConn->query($query) === TRUE;

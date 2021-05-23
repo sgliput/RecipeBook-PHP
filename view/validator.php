@@ -1,8 +1,8 @@
 <?php
 namespace validator;
 
-// Validate the length of the userId; parameter passed by value
-function userIdValid($name) {
+// Validate the length of the username; parameter passed by value
+function usernameValid($name) {
     if (strlen($name) > 0) {
         if (strlen($name) < 4)
             return "Must be at least 4 characters.";

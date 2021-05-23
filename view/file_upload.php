@@ -6,9 +6,6 @@ session_start();
 require_once('../util/file_utilities.php');
 require_once('../util/security.php');
 
-// confirm user is authorized for the page
-Utility\Security::checkAuthority('tech');
-
 // user clicked the logout button
 if (isset($_POST['logout'])) {
     Utility\Security::logout();
@@ -53,10 +50,10 @@ if (isset($_POST['create'])) {
 ?>
 <html>
 <head>
-    <title>Sam Liput Final Practical</title>
+    <title>Recipe Book</title>
 </head>
 <body>
-    <h1>Sam Liput Final Practical</h1>
+    <h1>Recipe Book</h1>
     <h2>Manage Incident Text Files</h2>
     <form method="POST">
     <ul>

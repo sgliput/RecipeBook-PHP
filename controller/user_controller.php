@@ -12,31 +12,24 @@ class UserController
     //helper function to convert a db row into a User object
     private static function rowToUser($row)
     {
-        $user = new User($row['UserId'],
-                         $row['Password'],
-                         $row['FirstName'],
-                         $row['LastName'],
-                         $row['HireDate'],
-                         $row['EMail'],
-                         $row['Extension'],
-                         new UserLevel($row['UserLevelNo'],
-                                       $row['LevelName']
-            )
+        $user = new User($row['Username'],
+                         $row['UserEmail'],
+                         $row['UserPassword']
         );
         $user->setUserNo($row['UserNo']);
         return $user;
     }
 
     // function to check login credentials - return true if user is valid, false otherwise
-    public static function validUser($userId, $password)
+    public static function validUser($username, $password)
     {
-        $queryRes = Model\UsersDB::getUserByUserId($userId);
+        $queryRes = Model\UsersDB::getUserByUsername($username);
 
         if ($queryRes) {
             // process the user row
             $user = self::rowToUser($queryRes);
-            if ($user->getPassword() === $password) {
-                return $user->getUserLevel()->getUserLevelNo();
+            if ($user->getUserPassword() === $password) {
+                return true;
             } else {
                 return false;
             }
@@ -91,14 +84,9 @@ class UserController
     public static function addUser($user)
     {
         return Model\UsersDB::addUser(
-            $user->getUserId(),
-            $user->getPassword(),
-            $user->getFirstName(),
-            $user->getLastName(),
-            $user->getHireDate(),
-            $user->getEMail(),
-            $user->getExtension(),
-            $user->getUserLevel()->getUserLevelNo()
+            $user->getUsername(),
+            $user->getUserEmail(),
+            $user->getPassword()
         );
     }
 
@@ -107,14 +95,9 @@ class UserController
     {
         return Model\UsersDB::updateUser(
             $user->getUserNo(),
-            $user->getUserId(),
-            $user->getPassword(),
-            $user->getFirstName(),
-            $user->getLastName(),
-            $user->getHireDate(),
-            $user->getEMail(),
-            $user->getExtension(),
-            $user->getUserLevel()->getUserLevelNo()
+            $user->getUsername(),
+            $user->getUserEmail(),
+            $user->getPassword()
         );
     }
 }

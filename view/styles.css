@@ -1,10 +1,29 @@
 table {
     border: 1px solid black;
     border-collapse: collapse;
-    margin-bottom: 1em;
+    margin: 1em auto;
+    width: 80%;
+    border-collapse: separate;
+    border-spacing: 10px;
 }
 td, th {
     border: 1px dashed black;
     padding: .2em .5em .2em .5em;
     text-align: left;
+}
+.recipeBlock {
+    border: 1px solid black;
+    height: 250px;
+    width: 45%;
+    margin: 5%;
+    text-align: center;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid black;
+    text-align: center;
+}
+.title {
+    text-align: center;
 }
