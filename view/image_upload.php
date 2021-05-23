@@ -6,9 +6,6 @@ session_start();
 require_once('../util/image_utilities.php');
 require_once('../util/security.php');
 
-// confirm user is authorized for the page
-Utility\Security::checkAuthority('admin');
-
 // user clicked the logout button
 if (isset($_POST['logout'])) {
     Utility\Security::logout();
@@ -39,10 +36,10 @@ if (isset($_POST['upload'])) {
 ?>
 <html>
 <head>
-    <title>Sam Liput Final Practical</title>
+    <title>Recipe Book</title>
 </head>
 <body>
-    <h1>Sam Liput Final Practical</h1>
+    <h1>Recipe Book</h1>
     <h2>Image File Management</h2>
     <form method="POST">
     <h3>Image Files: <select name="image_file">
@@ -65,7 +62,7 @@ if (isset($_POST['upload'])) {
     <h4>Original Image:</h4>
     <img src="../images/<?php echo $imgName; ?>" alt="<?php echo $imgName; ?>">
 
-    <h3><a href="admin.php">Home</a></h3>
+    <h3><a href="home.php">Home</a></h3>
     <form method='POST'>
         <input type="submit" value="Logout" name="logout">
     </form>

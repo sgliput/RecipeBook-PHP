@@ -4,9 +4,9 @@ namespace Models;
 class Database {
     // DB connection parameters
     private $host = 'localhost';
-    private $dbname = 'cis367_wk3final';
-    private $username = 'cis367final_user';
-    private $password = '6TusdNdKdUoACkHm';
+    private $dbname = 'recipeBook';
+    private $username = 'RB_user';
+    private $password = 'password';
 
     // DB connection and error message
     private $conn;
