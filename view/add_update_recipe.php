@@ -18,11 +18,12 @@
         Utility\Security::logout();
     }
 
-    // default user for add - empty strings
-    $user = new Controller\User('', '', '');
-    $user_levels = Controller\UserLevelController::getAllLevels();
-    $user->setUserNo(-1);
+    // default recipe for add - empty strings
+    $recipe = new Controller\Recipe('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    $recipe->setRecipeNo(-1);
     $pageTitle = "Add a New Recipe";
+    $recipes = Controller\RecipeController::getAllRecipes();
+
 
     // Declare and clear variables for error messages
     $username_error = '';
@@ -33,37 +34,53 @@
     $email_error = '';
     $extension_error = '';
 
-    // Retrieve the userNo from the query string and use it to create a user object for that userNo
-    if (isset($_GET['userNo'])) {
-        $user = Controller\UserController::getUserByNo($_GET['userNo']);
+    // Retrieve the recipeNo from the query string and use it to create a recipe object for that recipeNo
+    if (isset($_GET['recipeNo'])) {
+        $recipe = Controller\RecipeController::getRecipeByNo($_GET['recipeNo']);
         $pageTitle = "Update an Existing Recipe";
     }
     
-    // Retrieve values from query string and store in user object
+    // Retrieve values from query string and store in recipe object
     // as long as the query string exists (which it does not on first load of a page).
-    if (isset($_POST['username']))
-        $user->setUsername($_POST['username']);
+    if (isset($_POST['recipeName']))
+        $recipe->setRecipeName($_POST['recipeName']);
     if (isset($_POST['password']))
-        $user->setUserPassword($_POST['password']);
-    // if (isset($_POST['fName']))
-    //     $user->setFirstName($_POST['fName']);
-    // if (isset($_POST['lName']))
-    //     $user->setLastName($_POST['lName']);
-    // if (isset($_POST['hireDate']))
-    //     $user->setHireDate($_POST['hireDate']);
-    // if (isset($_POST['email']))
-    //     $user->setEMail($_POST['email']);
-    // if (isset($_POST['extension']))
-    //     $user->setExtension($_POST['extension']);
-    // if (isset($_POST['userLevelOption']))
-    //     $user->setUserLevel(new Controller\UserLevel($user_levels[$_POST['userLevelOption']-1], $user_levels[$_POST['userLevelOption']-1]->getLevelName()));
+        $recipe->setRecipeDescription($_POST['recipeDescription']);
+    if (isset($_POST['recipeSteps']))
+        $recipe->setRecipeSteps($_POST['recipeSteps']);
+    if (isset($_POST['recipeCookTime']))
+        $recipe->setRecipeCookTime($_POST['recipeCookTime']);
+    if (isset($_POST['ingredient1']))
+        $recipe->setIngredient1($_POST['ingredient1']);
+    if (isset($_POST['ingredient2']))
+        $recipe->setIngredient2($_POST['ingredient2']);
+    if (isset($_POST['ingredient3']))
+        $recipe->setIngredient3($_POST['ingredient3']);
+    if (isset($_POST['ingredient4']))
+        $recipe->setIngredient4($_POST['ingredient4']);
+    if (isset($_POST['ingredient5']))
+        $recipe->setIngredient5($_POST['ingredient5']);
+    if (isset($_POST['ingredient6']))
+        $recipe->setIngredient6($_POST['ingredient6']);
+    if (isset($_POST['ingredient7']))
+        $recipe->setIngredient7($_POST['ingredient7']);
+    if (isset($_POST['ingredient8']))
+        $recipe->setIngredient8($_POST['ingredient8']);
+    if (isset($_POST['ingredient9']))
+        $recipe->setIngredient9($_POST['ingredient9']);
+    if (isset($_POST['ingredient10']))
+        $recipe->setIngredient10($_POST['ingredient10']);
+    if (isset($_POST['isPublic']))
+        $recipe->setIsPublic($_POST['isPublic']);
+    if (isset($_POST['imgFile']))
+        $recipe->setImgFile($_POST['imgFile']);
     
     // when save button is clicked
     if (isset($_POST['save'])) {
         // Validate the values entered
         // Call nameValid from the validator namespace for first and last name
-        // $first_name_error = validator\nameValid($user->getFirstName());
-        // $last_name_error = validator\nameValid($user->getLastName());
+        // $first_name_error = validator\nameValid($recipe->getFirstName());
+        // $last_name_error = validator\nameValid($recipe->getLastName());
 
         // Call validation methods for other values
         $username_error = validator\usernameValid($user->getUsername());
@@ -78,19 +95,20 @@
         if (strlen($username_error) === 0 && strlen($password_error) === 0 && strlen($first_name_error) === 0 && strlen($last_name_error) === 0 
             && strlen($hire_date_error) === 0 && strlen($extension_error) === 0 && strlen($email_error) === 0) {
             // save button - perform add or update
-            $user = new Controller\User($_POST['username'], $_POST['password'], $_POST['fName'], $_POST['lName'],
-                $_POST['hireDate'], $_POST['email'], $_POST['extension'], $user_levels[$_POST['userLevelOption']-1]);
-            $user->setUserNo($_POST['userNo']);
+            $recipe = new Controller\Recipe($_POST['recipeNo'], $_POST['recipeName'], $_POST['recipeDescription'], $_POST['recipeSteps'], $_POST['recipeCookTime'],
+                $_POST['ingredient1'], $_POST['ingredient2'], $_POST['ingredient3'], $_POST['ingredient4'], $_POST['ingredient5'], $_POST['ingredient6'],
+                $_POST['ingredient7'], $_POST['ingredient8'], $_POST['ingredient9'], $_POST['ingredient10'], $_POST['isPublic'], $_POST['imgFile'], $userNo);
+            $recipe->setRecipeNo($_POST['recipeNo']);
 
-            if ($user->getUserNo() === '-1') {
-                // add user
-                Controller\UserController::addUser($user);
+            if ($recipe->getRecipeNo() === '-1') {
+                // add recipe
+                Controller\RecipeController::addRecipe($recipe);
             } else {
-                // update user
-                Controller\UserController::updateUser($user);
+                // update recipe
+                Controller\RecipeController::updateRecipe($recipe);
             }
 
-            // return to users list
+            // return to recipes list
             header('Location: ./home.php');
         }
     }
@@ -110,73 +128,83 @@
     <h1 class="title">Recipe Book</h1>
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST'>
-        <h3>Recipe Name: <input type="text" name="username"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Recipe Name: <input type="text" name="recipeName"
+            value="<?php echo $recipe->getRecipeName(); ?>">
             <?php if (strlen($username_error) > 0)
                 echo "<span style='color: red;'>{$username_error}</span>"; ?>
         </h3>
-        <h3>Prep Time: <input type="text" name="password"
-            value="<?php echo $user->getUserPassword(); ?>">
+        <h3>Description: <input type="text" name="recipeDescription"
+            value="<?php echo $recipe->getRecipeDescription(); ?>">
             <?php if (strlen($password_error) > 0)
                 echo "<span style='color: red;'>{$password_error}</span>"; ?>
         </h3>
-        <h3>Description: <input type="text" name="fName"
-            value="<?php echo $user->getUsername(); ?>">
-            <?php if (strlen($first_name_error) > 0)
-                echo "<span style='color: red;'>{$first_name_error}</span>"; ?>
-        </h3>
-        <h3>Ingredient 1: <input type="text" name="lName"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Cook Time: <input type="text" name="recipeCookTime"
+            value="<?php echo $recipe->getRecipeCookTime(); ?>">
             <?php if (strlen($last_name_error) > 0)
                 echo "<span style='color: red;'>{$last_name_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 2: <input type="text" name="email"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 1: <input type="text" name="ingredient1"
+            value="<?php echo $recipe->getIngredient1(); ?>">
             <?php if (strlen($email_error) > 0)
                 echo "<span style='color: red;'>{$email_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 3: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 2: <input type="text" name="ingredient2"
+            value="<?php echo $recipe->getIngredient2(); ?>">
+            <?php if (strlen($email_error) > 0)
+                echo "<span style='color: red;'>{$email_error}</span>"; ?>
+        </h3>
+        <h3>Ingredient 3: <input type="text" name="ingredient3"
+            value="<?php echo $recipe->getIngredient3(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 4: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 4: <input type="text" name="ingredient4"
+            value="<?php echo $recipe->getIngredient4(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 5: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 5: <input type="text" name="ingredient5"
+            value="<?php echo $recipe->getIngredient5(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 6: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 6: <input type="text" name="ingredient6"
+            value="<?php echo $recipe->getIngredient6(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 7: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 7: <input type="text" name="ingredient7"
+            value="<?php echo $recipe->getIngredient7(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 8: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 8: <input type="text" name="ingredient8"
+            value="<?php echo $recipe->getIngredient8(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 9: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 9: <input type="text" name="ingredient9"
+            value="<?php echo $recipe->getIngredient9(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Ingredient 10: <input type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>">
+        <h3>Ingredient 10: <input type="text" name="ingredient10"
+            value="<?php echo $recipe->getIngredient10(); ?>">
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         </h3>
-        <h3>Directions:</h3> <textarea rows="5" columns="10" type="text" name="extension"
-            value="<?php echo $user->getUsername(); ?>"></textarea>
+        <h3>Do you want this recipe to be public? <input type="text" name="isPublic"
+            value="<?php echo $recipe->getIsPublic(); ?>">
+            <?php if (strlen($extension_error) > 0)
+                echo "<span style='color: red;'>{$extension_error}</span>"; ?>
+        </h3>
+        <h3>Image File: <input type="text" name="imgFile"
+            value="<?php echo $recipe->getImgFile(); ?>">
+            <?php if (strlen($extension_error) > 0)
+                echo "<span style='color: red;'>{$extension_error}</span>"; ?>
+        </h3>
+        <h3>Directions:</h3> <textarea rows="5" columns="10" type="text" name="recipeSteps"
+            value="<?php echo $recipe->getRecipeSteps(); ?>"></textarea>
             <?php if (strlen($extension_error) > 0)
                 echo "<span style='color: red;'>{$extension_error}</span>"; ?>
         <br /><br />
@@ -190,7 +218,7 @@
             </select>
         </h3>         -->
         <input type="hidden"
-            value="<?php echo $user->getUserNo(); ?>" name="userNo">
+            value="<?php echo $recipe->getRecipeNo(); ?>" name="recipeNo">
         <input type="submit" value="Save" name="save">
         <input type="submit" value="Cancel" name="cancel">
     </form>

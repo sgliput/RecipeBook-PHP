@@ -6,6 +6,8 @@ use Utilities as Utility;
 session_start();
 require_once('../controller/user.php');
 require_once('../controller/user_controller.php');
+require_once('../controller/recipe.php');
+require_once('../controller/recipe_controller.php');
 require_once('../util/security.php');
 
 // user clicked the logout button
@@ -13,23 +15,23 @@ if (isset($_POST['logout'])) {
     Utility\Security::logout();
 }
 
-if (isset($_POST['update'])) {
-    // update button pressed for a user
-    if (isset($_POST['userNoUpd'])) {
-        header('Location: ./add_update_recipe.php?userNo=' . $_POST['userNoUpd']);
-    }
-    unset($_POST['update']);
-    unset($_POST['userNoUpd']);
-}
+// if (isset($_POST['update'])) {
+//     // update button pressed for a user
+//     if (isset($_POST['userNoUpd'])) {
+//         header('Location: ./add_update_recipe.php?userNo=' . $_POST['userNoUpd']);
+//     }
+//     unset($_POST['update']);
+//     unset($_POST['userNoUpd']);
+// }
 
-if (isset($_POST['delete'])) {
-    // delete button pressed for a user
-    if (isset($_POST['userNoDel'])) {
-        Controller\UserController::deleteUser($_POST['userNoDel']);
-    }
-    unset($_POST['delete']);
-    unset($_POST['userNoDel']);
-}
+// if (isset($_POST['delete'])) {
+//     // delete button pressed for a user
+//     if (isset($_POST['userNoDel'])) {
+//         Controller\RecipeController::deleteRecipe($_POST['userNoDel']);
+//     }
+//     unset($_POST['delete']);
+//     unset($_POST['userNoDel']);
+// }
 
 if (isset($_POST['goToRecipe'])) {
     if (isset($_POST['recipeNo'])) {
@@ -57,25 +59,28 @@ if (isset($_POST['goToRecipe'])) {
 
     <h1 class="title">Public Recipes</h1>
     <table>
-        <?php foreach (Controller\UserController::getAllUsers() as $user) {
-            $index = array_search($user, Controller\UserController::getAllUsers()); ?>
+        <?php foreach (Controller\RecipeController::getAllRecipes() as $recipe) {
+            $index = array_search($recipe, Controller\RecipeController::getAllRecipes()); ?>
             <?php if ($index % 2 == 0) { ?>
                 <tr>
                     <td class="recipeBlock">
-                        <h2><?php echo $user->getUsername(); ?></h2>
-                        <p><?php echo $user->getUserPassword(); ?></p>
+                        <h2><?php echo $recipe->getRecipeName(); ?></h2>
+                        <p><?php echo $recipe->getRecipeCookTime(); ?></p>
+                        <p><?php echo $recipe->getRecipeDescription(); ?></p>
+
                         <form method="POST">
-                            <input type="hidden" name="recipeNo" value="<?php echo $user->getUserNo(); ?>" />
+                            <input type="hidden" name="recipeNo" value="<?php echo $recipe->getRecipeNo(); ?>" />
                             <input type="submit" value="See Recipe" name="goToRecipe" />
                         </form>
 
                     </td>
                 <?php } else { ?>
                     <td class="recipeBlock">
-                        <h2><?php echo $user->getUsername(); ?></h2>
-                        <p><?php echo $user->getUserEmail(); ?></p>
+                    <h2><?php echo $recipe->getRecipeName(); ?></h2>
+                        <p><?php echo $recipe->getRecipeCookTime(); ?></p>
+                        <p><?php echo $recipe->getRecipeDescription(); ?></p>
                         <form method="POST">
-                            <input type="hidden" name="recipeNo" value="<?php echo $user->getUserNo(); ?>" />
+                            <input type="hidden" name="recipeNo" value="<?php echo $recipe->getRecipeNo(); ?>" />
                             <input type="submit" value="See Recipe" name="goToRecipe" />
                         </form>
 
