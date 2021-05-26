@@ -23,7 +23,7 @@ if (isset($_POST['update'])) {
 }
 
 if (isset($_POST['delete'])) {
-    // delete button pressed for a user
+    // delete button pressed for a use
     if (isset($_POST['userNoDel'])) {
         Controller\UserController::deleteUser($_POST['userNoDel']);
     }
