@@ -37,9 +37,46 @@ class RecipeController
         return $recipe;
     }
 
-    public static function getAllRecipes()
+    public static function getAllPublicRecipes()
     {
-        $queryRes = Model\RecipeDB::getRecipes();
+        $queryRes = Model\RecipeDB::getPublicRecipes();
+
+        if ($queryRes) {
+            // process the results into an array of Recipe objects
+            $recipes = array();
+            foreach ($queryRes as $row) {
+                $recipes[] = new Recipe(
+                    $row['RecipeNo'],
+                    $row['RecipeName'],
+                    $row['RecipeDescription'],
+                    $row['RecipeSteps'],
+                    $row['RecipeCookTime'],
+                    $row['Ingredient1'],
+                    $row['Ingredient2'],
+                    $row['Ingredient3'],
+                    $row['Ingredient4'],
+                    $row['Ingredient5'],
+                    $row['Ingredient6'],
+                    $row['Ingredient7'],
+                    $row['Ingredient8'],
+                    $row['Ingredient9'],
+                    $row['Ingredient10'],
+                    $row['IsPublic'],
+                    $row['ImgFile'],
+                    $row['UserNo']
+                );
+            }
+
+            // return the array of Recipe information
+            return $recipes;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getAllRecipesForUser($userNo)
+    {
+        $queryRes = Model\RecipeDB::getRecipesForUser($userNo);
 
         if ($queryRes) {
             // process the results into an array of Recipe objects
@@ -85,6 +122,49 @@ class RecipeController
         } else {
             return false;
         }
+    }
+
+    // function to get recipes by search term
+    public static function getPublicRecipesBySearchTerm($searchTerm) {
+        $queryRes = Model\RecipeDB::searchPublicRecipes($searchTerm);
+
+        if ($queryRes) {
+            // process the results into an array of Recipe objects
+            $recipes = array();
+            foreach ($queryRes as $row) {
+                $recipes[] = new Recipe(
+                    $row['RecipeNo'],
+                    $row['RecipeName'],
+                    $row['RecipeDescription'],
+                    $row['RecipeSteps'],
+                    $row['RecipeCookTime'],
+                    $row['Ingredient1'],
+                    $row['Ingredient2'],
+                    $row['Ingredient3'],
+                    $row['Ingredient4'],
+                    $row['Ingredient5'],
+                    $row['Ingredient6'],
+                    $row['Ingredient7'],
+                    $row['Ingredient8'],
+                    $row['Ingredient9'],
+                    $row['Ingredient10'],
+                    $row['IsPublic'],
+                    $row['ImgFile'],
+                    $row['UserNo']
+                );
+            }
+
+            // return the array of Recipe information
+            return $recipes;
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkImageNotPresent($imgName, $recipeNo) {
+        $imageNameNotPresent = Model\RecipeDB::checkSavedImages($imgName, $recipeNo);
+
+        return $imageNameNotPresent;
     }
 
     // function to delete a recipe by their RecipeNo

@@ -10,28 +10,16 @@ require_once('../controller/recipe.php');
 require_once('../controller/recipe_controller.php');
 require_once('../util/security.php');
 
+$recipes = Controller\RecipeController::getAllPublicRecipes();
+
 // user clicked the logout button
 if (isset($_POST['logout'])) {
     Utility\Security::logout();
 }
 
-// if (isset($_POST['update'])) {
-//     // update button pressed for a user
-//     if (isset($_POST['userNoUpd'])) {
-//         header('Location: ./add_update_recipe.php?userNo=' . $_POST['userNoUpd']);
-//     }
-//     unset($_POST['update']);
-//     unset($_POST['userNoUpd']);
-// }
-
-// if (isset($_POST['delete'])) {
-//     // delete button pressed for a user
-//     if (isset($_POST['userNoDel'])) {
-//         Controller\RecipeController::deleteRecipe($_POST['userNoDel']);
-//     }
-//     unset($_POST['delete']);
-//     unset($_POST['userNoDel']);
-// }
+if (isset($_POST['search'])) {
+    $recipes = Controller\RecipeController::getPublicRecipesBySearchTerm($_POST['searchTerm']);
+}
 
 if (isset($_POST['goToRecipe'])) {
     if (isset($_POST['recipeNo'])) {
@@ -40,11 +28,12 @@ if (isset($_POST['goToRecipe'])) {
     unset($_POST['goToRecipe']);
     unset($_POST['recipeNo']);
 }
-// <td><form method="POST">
-//    <input type="hidden" name="userNoDel"
-//       value="<?php echo $user->getUserNo(); " close php here />
-//    <input type="submit" value="Delete" name="delete" />
-// </form></td>
+
+if (isset($_POST['userEdit'])) {
+    header('Location: ./login_edit.php?userNo=' . $_SESSION['userNo']);
+
+    unset($_POST['userEdit']);
+}
 ?>
 <html>
 
@@ -58,15 +47,21 @@ if (isset($_POST['goToRecipe'])) {
     <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
 
     <h1 class="title">Public Recipes</h1>
+    <form method='POST' class="searchField">
+        <h3>Search: <input type="text" name="searchTerm" value="">
+            <input type="submit" value="Search" name="search">
+        </h3>
+    </form>
     <table>
-        <?php foreach (Controller\RecipeController::getAllRecipes() as $recipe) {
-            $index = array_search($recipe, Controller\RecipeController::getAllRecipes()); ?>
+        <?php foreach ($recipes as $recipe) {
+            $index = array_search($recipe, $recipes); ?>
             <?php if ($index % 2 == 0) { ?>
                 <tr>
                     <td class="recipeBlock">
                         <h2><?php echo $recipe->getRecipeName(); ?></h2>
-                        <p><?php echo $recipe->getRecipeCookTime(); ?></p>
-                        <p><?php echo $recipe->getRecipeDescription(); ?></p>
+                        <p><b>Posted by:</b> <?php echo Controller\UserController::getUserByNo($recipe->getUserNo())->getUsername(); ?></p>
+                        <p><b>Cook Time:</b> <?php echo $recipe->getRecipeCookTime(); ?></p>
+                        <p><b>Description:</b> <?php echo $recipe->getRecipeDescription(); ?></p>
 
                         <form method="POST">
                             <input type="hidden" name="recipeNo" value="<?php echo $recipe->getRecipeNo(); ?>" />
@@ -76,9 +71,10 @@ if (isset($_POST['goToRecipe'])) {
                     </td>
                 <?php } else { ?>
                     <td class="recipeBlock">
-                    <h2><?php echo $recipe->getRecipeName(); ?></h2>
-                        <p><?php echo $recipe->getRecipeCookTime(); ?></p>
-                        <p><?php echo $recipe->getRecipeDescription(); ?></p>
+                        <h2><?php echo $recipe->getRecipeName(); ?></h2>
+                        <p><b>Posted by:</b> <?php echo Controller\UserController::getUserByNo($recipe->getUserNo())->getUsername(); ?></p>
+                        <p><b>Cook Time:</b> <?php echo $recipe->getRecipeCookTime(); ?></p>
+                        <p><b>Description:</b> <?php echo $recipe->getRecipeDescription(); ?></p>
                         <form method="POST">
                             <input type="hidden" name="recipeNo" value="<?php echo $recipe->getRecipeNo(); ?>" />
                             <input type="submit" value="See Recipe" name="goToRecipe" />
@@ -92,6 +88,11 @@ if (isset($_POST['goToRecipe'])) {
     </table>
     <h3><a href="personal_recipebook.php">Personal Recipe Book</a></h3>
     <h3><a href="home.php">Home</a></h3>
+    <?php if ($_SESSION['userNo'] !== null) { ?>
+    <form method='POST'>
+        <input type="submit" value="Edit User Info" name="userEdit">
+    </form>
+    <?php }; ?>
     <form method='POST'>
         <input type="submit" value="Logout" name="logout">
     </form>

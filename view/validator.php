@@ -2,7 +2,7 @@
 namespace validator;
 
 // Validate the length of the username; parameter passed by value
-function usernameValid($name) {
+function recipeNameValid($name) {
     if (strlen($name) > 0) {
         if (strlen($name) < 4)
             return "Must be at least 4 characters.";
@@ -27,10 +27,10 @@ function passwordValid($password) {
 }
 
 // Validate the length of the name; parameter passed by value
-function nameValid($name) {
+function usernameValid($name) {
     if (strlen($name) > 0) {
         if (strlen($name) < 2)
-            return "Must be at least 2 characters.";
+            return "Must be at least 6 characters.";
         else
             return '';
     } else {
@@ -40,23 +40,10 @@ function nameValid($name) {
 
 // Validate the presence of a value or default date value
 function requiredValid($value) {
-    if (strlen($value) === 0 || $value === '0000-00-00')
+    if (strlen(trim($value)) == 0 || $value === '0000-00-00')
         return "Required";
     else
         return '';
-}
-
-// Validate that extension is five digits with regex
-function extensionValid($extension) {
-    $regex="/^\d{5}$/";
-    if (strlen($extension) > 0) {
-        if (!preg_match($regex, $extension))
-            return "Invalid Extension - 5 digits only";
-        else
-            return '';
-    } else {
-        return "Required";
-    }
 }
 
 // Validate an email address using the built-in PHP e-mail format validator; 

@@ -38,10 +38,10 @@ class User {
         $this->userEmail = $value;
     }
 
-    public function getUserPassword() {
+    public function getPassword() {
         return $this->password;
     }
-    public function setUserPassword($value) {
+    public function setPassword($value) {
         $this->password = $value;
     }
 }

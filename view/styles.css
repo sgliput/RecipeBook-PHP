@@ -23,7 +23,36 @@ td, th {
     margin: 0 auto;
     border: 1px solid black;
     text-align: center;
+    contain: content;
 }
 .title {
     text-align: center;
+}
+
+.recipe_title {
+    margin-bottom: 5%;
+}
+
+.recipe_img {
+    float: left;
+    margin-left: 10%;
+    margin-bottom: 3%;
+    height: auto;
+    width: 42%;
+}
+
+.recipe_steps {
+    margin: 3% auto;
+}
+
+.ingredient_list p {
+    margin-left:52%;
+}
+
+.searchField {
+    text-align: center;
+}
+
+#imgFileSelect {
+    opacity: 0;
 }

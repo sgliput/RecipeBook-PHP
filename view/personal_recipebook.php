@@ -5,12 +5,14 @@ use Utilities as Utility;
 session_start();
 require_once('../controller/user.php');
 require_once('../controller/user_controller.php');
+require_once('../controller/recipe.php');
+require_once('../controller/recipe_controller.php');
 require_once('../util/security.php');
 
 // confirm user is authorized for the page
 Utility\Security::checkAuthority('logged_in');
 
-$recipes = Controller\UserController::getAllUsers();
+$recipes = Controller\RecipeController::getAllRecipesForUser($_SESSION['userNo']);
 
 // user clicked the logout button
 if (isset($_POST['logout'])) {
@@ -35,29 +37,34 @@ if (isset($_POST['goToRecipe'])) {
     <h1 class="title">Recipe Book</h1>
 
     <h1 class="title">Your Personal Recipe Book</h1>
+    <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
 
     <table>
-    <?php foreach ($recipes as $user) {
-         $index = array_search($user, $recipes); ?>
+    <?php foreach ($recipes as $recipe) {
+         $index = array_search($recipe, $recipes); ?>
         <?php if($index % 2 == 0) { ?>
         <tr>
         <td class="recipeBlock">
-            <h2><?php echo $user->getUsername(); ?></h2>
-            <p><?php echo $user->getUserEmail(); ?></p>
+            <h2><?php echo $recipe->getRecipeName(); ?></h2>
+            <p><b>Posted by:</b> <?php echo Controller\UserController::getUserByNo($recipe->getUserNo())->getUsername(); ?></p>
+            <p><b>Cook Time:</b> <?php echo $recipe->getRecipeCookTime(); ?></p>
+            <p><b>Description:</b> <?php echo $recipe->getRecipeDescription(); ?></p>
             <form method="POST">
                 <input type="hidden" name="recipeNo"
-                    value="<?php echo $user->getUserNo(); ?>" />
+                    value="<?php echo $recipe->getRecipeNo(); ?>" />
                 <input type="submit" value="See Recipe" name="goToRecipe" />
             </form>
 
         </td>
         <?php } else { ?>
         <td class="recipeBlock">
-            <h2><?php echo $user->getUsername(); ?></h2>
-            <p><?php echo $user->getUserPassword(); ?></p>
+            <h2><?php echo $recipe->getRecipeName(); ?></h2>
+            <p><b>Posted by:</b> <?php echo Controller\UserController::getUserByNo($recipe->getUserNo())->getUsername(); ?></p>
+            <p><b>Cook Time:</b> <?php echo $recipe->getRecipeCookTime(); ?></p>
+            <p><b>Description:</b> <?php echo $recipe->getRecipeDescription(); ?></p>
             <form method="POST">
                 <input type="hidden" name="recipeNo"
-                    value="<?php echo $user->getUserNo(); ?>" />
+                    value="<?php echo $recipe->getRecipeNo(); ?>" />
                 <input type="submit" value="See Recipe" name="goToRecipe" />
             </form>
 

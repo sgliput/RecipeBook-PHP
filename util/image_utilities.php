@@ -37,6 +37,8 @@ class ImageUtilities {
             $origImage = imagecreatefrompng($orig);
         } else if ($type === IMAGETYPE_JPEG) {
             $origImage = imagecreatefromjpeg($orig);
+        } else {
+            throw new \Exception("Try a different image type!");
         }
         $origWidth = imagesx($origImage);
         $origHeight = imagesy($origImage);
@@ -68,6 +70,8 @@ class ImageUtilities {
         self::CreateDirectories($fInfo['dirname']);
 
         $imgType = getimagesize($file)[2];
+
+        try {
         $newImg200 = self::ResizeImage($file, $imgType, 200);
 
         // based on image type, create the files
@@ -84,6 +88,9 @@ class ImageUtilities {
 
         // free up any image resources
         imagedestroy($newImg200);
+    } catch (\Exception $e) {
+        throw $e;
+    }
     }
 
     // function to delete the base and associated images

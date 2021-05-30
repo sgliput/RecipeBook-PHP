@@ -6,15 +6,69 @@ require_once('database.php');
 // class for doing recipe table queries; only gets all existing recipes for now
 class RecipeDB {
     // Get all recipes in the DB; returns false if the database connection fails
-    public static function getRecipes() {
+    public static function getPublicRecipes() {
         // get the DB connection
         $db = new Database();
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
             // create the query string
-            $query = 'SELECT * FROM recipes';
+            $query = "SELECT *
+                      FROM recipes
+                      WHERE isPublic = true";
 
+            // execute the query
+            return $dbConn->query($query);
+        } else {
+            return false;
+        }
+    }
+
+    // Get all recipes in the DB for a specific user; returns false if the database connection fails
+    public static function getRecipesForUser($userNo) {
+        // get the DB connection
+        $db = new Database();
+        $dbConn = $db->getDbConn();
+
+        if ($dbConn) {
+            // create the query string
+            $query = "SELECT *
+                      FROM recipes
+                      WHERE UserNo = '$userNo'";
+
+            // execute the query
+            return $dbConn->query($query);
+        } else {
+            return false;
+        }
+    }
+
+    // function to search public recipes by search term
+    public static function searchPublicRecipes($searchTerm) {
+        // get the database connection
+        $db = new Database();
+        $dbConn = $db->getDbConn();
+
+        if ($dbConn) {
+            // create the query string
+            $query = "SELECT *
+                      FROM recipes
+                      WHERE (recipeName LIKE '%$searchTerm%'
+                             OR recipeDescription LIKE '%$searchTerm%'
+                             OR recipeSteps LIKE '%$searchTerm%'
+                             OR Ingredient1 LIKE '%$searchTerm%'
+                             OR Ingredient2 LIKE '%$searchTerm%'
+                             OR Ingredient3 LIKE '%$searchTerm%'
+                             OR Ingredient4 LIKE '%$searchTerm%'
+                             OR Ingredient5 LIKE '%$searchTerm%'
+                             OR Ingredient6 LIKE '%$searchTerm%'
+                             OR Ingredient7 LIKE '%$searchTerm%'
+                             OR Ingredient8 LIKE '%$searchTerm%'
+                             OR Ingredient9 LIKE '%$searchTerm%'
+                             OR Ingredient10 LIKE '%$searchTerm%'
+                            )
+                      AND isPublic = 1";
+            
             // execute the query
             return $dbConn->query($query);
         } else {
@@ -38,6 +92,28 @@ class RecipeDB {
             $result = $dbConn->query($query);
             // return the associative array
             return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkSavedImages($imgName, $recipeNo) {
+        // get the database connection
+        $db = new Database();
+        $dbConn = $db->getDbConn();
+
+        if ($dbConn) {
+            
+            // create the query string
+            $query = "SELECT *
+                      FROM recipes
+                      WHERE ImgFile = '$imgName'
+                      AND RecipeNo != '$recipeNo'";
+            
+            // execute the query
+            $result = $dbConn->query($query);
+            // return the associative array
+            return (mysqli_num_rows($result) == 0) ? true : false;
         } else {
             return false;
         }
@@ -94,7 +170,7 @@ class RecipeDB {
                                            Ingredient10, IsPublic, ImgFile, UserNo)
                       VALUES ('$recipeName', '$recipeDescription', '$recipeSteps', '$recipeCookTime', '$ingredient1', '$ingredient2', 
                               '$ingredient3', '$ingredient4', '$ingredient5', '$ingredient6', '$ingredient7', '$ingredient8', '$ingredient9',
-                              '$ingredient10', '$isPublic', '$imgFile', '$userNo)";
+                              '$ingredient10', '$isPublic', '$imgFile', '$userNo')";
 
             // execute the query, returning status
             return $dbConn->query($query) === TRUE;
