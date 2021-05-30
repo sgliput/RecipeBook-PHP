@@ -28,10 +28,10 @@ class UserController
         if ($queryRes) {
             // process the user row
             $user = self::rowToUser($queryRes);
-            if ($user->getUserPassword() === $password) {
-                return true;
+            if ($user->getPassword() === $password) {
+                return $user->getUserNo();
             } else {
-                return false;
+                return -1;
             }
         } else {
             // either no such user or db connect failed

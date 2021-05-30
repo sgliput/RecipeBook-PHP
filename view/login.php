@@ -14,16 +14,25 @@ $login_msg = isset($_SESSION['logout_msg']) ? $_SESSION['logout_msg'] : '';
 
 if (isset($_POST['username']) & isset($_POST['pw'])) {
     // login and password fields were set
-    $is_user = Controller\UserController::validUser(
+    $userNo = Controller\UserController::validUser(
             $_POST['username'], $_POST['pw']);
     
     // checks $is_user to verify authorized user
-    if ($is_user) {
+    if ($userNo !== -1) {
         $_SESSION['logged_in'] = true;
+        $_SESSION['userNo'] = $userNo;
         header("Location: home.php");
+        unset($_POST['username']);
+        unset($_POST['password']);
+        unset($_POST['login']);
     } else {
         $login_msg = 'Incorrect login credentials - try again.';
     }
+}
+
+if (isset($_POST['register'])) {
+    header('Location: ./login_edit.php');
+    unset($_POST['register']);
 }
 ?>
 <html>
@@ -40,5 +49,8 @@ if (isset($_POST['username']) & isset($_POST['pw'])) {
         <input type="submit" value="Login" name="login">
     </form>
     <h2><?php echo $login_msg; ?></h2>
+    <form method='POST'>
+        <input type="submit" value="New User?" name="register" />
+    </form>
 </body>
 </html>

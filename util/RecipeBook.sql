@@ -23,10 +23,10 @@ INSERT INTO users (Username, UserEmail, UserPassword) VALUES
 DROP TABLE IF EXISTS recipes;
 CREATE TABLE recipes (
   RecipeNo int(11) AUTO_INCREMENT PRIMARY KEY,
-  RecipeName varchar(20) NOT NULL,
-  RecipeDescription varchar(50) NOT NULL,
+  RecipeName varchar(50) NOT NULL,
+  RecipeDescription varchar(100) NOT NULL,
   RecipeSteps varchar(300) NOT NULL,
-  RecipeCookTime varchar(10) NOT NULL,
+  RecipeCookTime varchar(30) NOT NULL,
   Ingredient1 varchar(30) NOT NULL,
   Ingredient2 varchar(30),
   Ingredient3 varchar(30),
