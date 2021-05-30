@@ -125,7 +125,7 @@ class UsersDB {
             $query = "UPDATE users SET
                             Username = '$username',
                             UserEmail = '$email',
-                            UserPassword = '$password',
+                            UserPassword = '$password'
                           WHERE UserNo = '$userNo'";
             // execute the query, returning status
             return $dbConn->query($query) === TRUE;
