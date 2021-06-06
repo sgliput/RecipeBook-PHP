@@ -33,7 +33,7 @@ if (isset($_POST['goToRecipe'])) {
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body>
+<body class= "personal_recipebook_body">
     <h1 class="title">Recipe Book</h1>
 
     <h1 class="title">Your Personal Recipe Book</h1>

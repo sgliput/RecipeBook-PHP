@@ -182,7 +182,7 @@ if (isset($_POST['cancel'])) {
 
 </head>
 
-<body>
+<body class= "add_update_recipe_body">
     <h1 class="title">Recipe Book</h1>
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST' enctype="multipart/form-data">

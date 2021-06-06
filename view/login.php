@@ -40,7 +40,7 @@ if (isset($_POST['register'])) {
     <title>Recipe Book Login</title>
 </head>
 
-<body>
+<body class= "login_body">
     <h1>Recipe Book</h1>  
     <h2>Returning User? Please Login</h2>
     <form method='POST'>
