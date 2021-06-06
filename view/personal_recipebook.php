@@ -34,14 +34,15 @@ if (isset($_POST['goToRecipe'])) {
 </head>
 
 <body>
-    <h1 class="title">Recipe Book</h1>
+    <h1 class="title site_title">Recipe Book</h1>
 
     <h1 class="title">Your Personal Recipe Book</h1>
     <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
 
     <table>
-    <?php foreach ($recipes as $recipe) {
-         $index = array_search($recipe, $recipes); ?>
+    <?php if ($recipes) { 
+        foreach ($recipes as $recipe) {
+        $index = array_search($recipe, $recipes); ?>
         <?php if($index % 2 == 0) { ?>
         <tr>
         <td class="recipeBlock">
@@ -70,8 +71,16 @@ if (isset($_POST['goToRecipe'])) {
 
         </td>
         </tr>
-        <?php } ?>
-        
+        <?php }; }; ?>
+
+    <?php } else { ?>
+        <tr>
+            <td class="noRecipesBlock">
+                <h2>You have no saved recipes.</h2>
+                <h3>Check out the public recipes on the Home page and save some to build your own private Recipe Book!</h3>
+            </td>
+        </tr>
+
     <?php }; ?>
     </table>
     <h3><a href="home.php">Home</a></h3>

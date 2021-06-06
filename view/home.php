@@ -11,6 +11,8 @@ require_once('../controller/recipe_controller.php');
 require_once('../util/security.php');
 
 $recipes = Controller\RecipeController::getAllPublicRecipes();
+// Remove logout message
+$_SESSION['logout_msg'] = '';
 
 // user clicked the logout button
 if (isset($_POST['logout'])) {
@@ -29,6 +31,12 @@ if (isset($_POST['goToRecipe'])) {
     unset($_POST['recipeNo']);
 }
 
+if (isset($_POST['userLogin'])) {
+    header('Location: ./login.php');
+
+    unset($_POST['userLogin']);
+}
+
 if (isset($_POST['userEdit'])) {
     header('Location: ./login_edit.php?userNo=' . $_SESSION['userNo']);
 
@@ -43,8 +51,10 @@ if (isset($_POST['userEdit'])) {
 </head>
 
 <body>
-    <h1 class="title">Recipe Book</h1>
-    <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
+    <h1 class="title site_title">Recipe Book</h1>
+    <?php if (isset($_SESSION['userNo'])) { ?>
+        <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
+    <?php }; ?>
 
     <h1 class="title">Public Recipes</h1>
     <form method='POST' class="searchField">
@@ -86,16 +96,19 @@ if (isset($_POST['userEdit'])) {
 
         <?php }; ?>
     </table>
-    <h3><a href="personal_recipebook.php">Personal Recipe Book</a></h3>
-    <h3><a href="home.php">Home</a></h3>
-    <?php if ($_SESSION['userNo'] !== null) { ?>
-    <form method='POST'>
-        <input type="submit" value="Edit User Info" name="userEdit">
-    </form>
+    <?php if (isset($_SESSION['userNo'])) { ?>
+        <h3><a href="personal_recipebook.php">Personal Recipe Book</a></h3>
+        <form method='POST'>
+            <input type="submit" value="Edit User Info" name="userEdit">
+        </form>
+        <form method='POST'>
+            <input type="submit" value="Logout" name="logout">
+        </form>
+    <?php } else { ?>
+        <form method='POST'>
+            <input type="submit" value="Log In" name="userLogin">
+        </form>
     <?php }; ?>
-    <form method='POST'>
-        <input type="submit" value="Logout" name="logout">
-    </form>
 </body>
 
 </html>

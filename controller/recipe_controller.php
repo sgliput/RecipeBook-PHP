@@ -168,10 +168,10 @@ class RecipeController
     }
 
     // function to delete a recipe by their RecipeNo
-    public static function deleteRecipe($recipeNo)
+    public static function deleteRecipe($recipeNo, $userNo, $recipeImg)
     {
         // no special processing needed - just use the DB function
-        return Model\RecipeDB::deleteRecipe($recipeNo);
+        return Model\RecipeDB::deleteRecipe($recipeNo, $userNo, $recipeImg);
     }
 
     // function to add a recipe to the DB

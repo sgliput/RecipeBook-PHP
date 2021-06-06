@@ -32,14 +32,17 @@ class UsersDB {
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            // create the query string
-            $query = "SELECT *
-                      FROM users
-                      WHERE users.username = '$username'";
+             // prepare statement to avoid SQL injection
+             $stmt = $dbConn->prepare('SELECT *
+                                       FROM users
+                                       WHERE users.username = ?');
 
-            // execute the query - returns false if no such email found
-            $result = $dbConn->query($query);
-            return $result->fetch_assoc();
+            $stmt->bind_param('s', $username); // 's' specifies the variable type => 'string'
+
+            // execute the prepared statement
+            $stmt->execute();
+            // return user array or false if no such user found
+            return $stmt->get_result()->fetch_assoc();
         } else {
             return false;
         }
@@ -52,15 +55,17 @@ class UsersDB {
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            // create the query string
-            $query = "SELECT *
-                      FROM users
-                      WHERE users.userNo = '$userNo'";
-            
-            // execute the query
-            $result = $dbConn->query($query);
-            // return the associative array
-            return $result->fetch_assoc();
+            // prepare statement to avoid SQL injection
+            $stmt = $dbConn->prepare('SELECT *
+                                      FROM users
+                                      WHERE users.userNo = ?');
+
+            $stmt->bind_param('i', $userNo); // 'i' specifies the variable type => 'integer'
+
+            // execute the prepared statement
+            $stmt->execute();
+            // return user array or false if no such user found
+            return $stmt->get_result()->fetch_assoc();
         } else {
             return false;
         }
@@ -75,12 +80,16 @@ class UsersDB {
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            // create the query string
-            $query = "DELETE FROM users
-                      WHERE UserNo = '$userNo'";
+            // prepare statement to avoid SQL injection
+            $stmt = $dbConn->prepare('DELETE FROM users
+                                      WHERE UserNo = ?');
 
-            // execute the query, returning status
-            return $dbConn->query($query) === TRUE;
+            $stmt->bind_param('i', $userNo); // 'i' specifies the variable type => 'integer'
+
+            // execute the prepared statement
+            $stmt->execute();
+            // return query status
+            return $stmt->get_result() === TRUE;
         } else {
             return false;
         }
@@ -95,15 +104,20 @@ class UsersDB {
         // get the database connection
         $db = new Database();
         $dbConn = $db->getDbConn();
+        // encrypt password for storage in database
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
         if ($dbConn) {
+            // prepare statement to avoid SQL injection
+            $stmt = $dbConn->prepare('INSERT INTO users (Username, UserEmail, UserPassword)
+                                      VALUES (?, ?, ?)');
 
-            // create the query string - UserNo is an auto-increment field, so no need to specify it
-            $query = "INSERT INTO users (Username, UserEmail, UserPassword)
-                      VALUES ('$username', '$email', '$password')";
+            $stmt->bind_param('sss', $username, $email, $hashed_password); // 's' specifies the variable type => 'string'
 
-            // execute the query, returning status
-            return $dbConn->query($query) === TRUE;
+            // execute the prepared statement
+            $stmt->execute();
+            // return query status
+            return $stmt->get_result() === TRUE;
         } else {
             return false;
         }
@@ -121,14 +135,31 @@ class UsersDB {
         $dbConn = $db->getDbConn();
 
         if ($dbConn) {
-            // create the query string
-            $query = "UPDATE users SET
-                            Username = '$username',
-                            UserEmail = '$email',
-                            UserPassword = '$password'
-                          WHERE UserNo = '$userNo'";
-            // execute the query, returning status
-            return $dbConn->query($query) === TRUE;
+            if (strlen($password) === 0) {
+                $stmt = $dbConn->prepare('UPDATE users 
+                                          SET Username = ?,
+                                              UserEmail = ?
+                                          WHERE UserNo = ?');
+
+                $stmt->bind_param('ssi', $username, $email, $userNo); // 's' specifies the variable type => 'string'
+
+            } else {
+                // encrypt password for storage in database
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                // prepare statement to avoid SQL injection
+                $stmt = $dbConn->prepare('UPDATE users 
+                                          SET Username = ?,
+                                              UserEmail = ?,
+                                              UserPassword = ?
+                                          WHERE UserNo = ?');
+
+                $stmt->bind_param('sssi', $username, $email, $hashed_password, $userNo); // 's' specifies the variable type => 'string'
+                                                                                         // 'i' specifies the variable type => 'integer'
+            }
+            // execute the prepared statement
+            $stmt->execute();
+            // return query status
+            return $stmt->get_result() === TRUE;
         } else {
             return false;
         }
