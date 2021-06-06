@@ -65,7 +65,7 @@ if (isset($_POST['logout'])) {
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body>
+<body class="single_recipe_body">
     <h1 class="title site_title">Recipe Book</h1>
 
     <div class="container">

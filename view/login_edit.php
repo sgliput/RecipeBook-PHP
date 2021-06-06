@@ -95,7 +95,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body>
+<body class="login_edit_body">
     <h1 class="title site_title">Recipe Book</h1>
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST'>

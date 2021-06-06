@@ -50,7 +50,7 @@ if (isset($_POST['userEdit'])) {
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body>
+<body class= "home_body">
     <h1 class="title site_title">Recipe Book</h1>
     <?php if (isset($_SESSION['userNo'])) { ?>
         <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
