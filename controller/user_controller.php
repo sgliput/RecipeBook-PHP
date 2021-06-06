@@ -28,7 +28,10 @@ class UserController
         if ($queryRes) {
             // process the user row
             $user = self::rowToUser($queryRes);
-            if ($user->getPassword() === $password) {
+
+            $isVerified = password_verify($password, $user->getPassword());
+            
+            if ($isVerified) {
                 return $user->getUserNo();
             } else {
                 return -1;

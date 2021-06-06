@@ -10,9 +10,6 @@
     require_once('validator.php');
     require_once('../util/security.php');
 
-    // confirm user is authorized for the page
-    Utility\Security::checkAuthority('logged_in');
-
     if (isset($_SESSION['userNo'])) {
         $userNo = $_SESSION['userNo'];
     }
@@ -26,6 +23,8 @@
     $user = new Controller\User('', '', '');
     $user->setUserNo(-1);
     $pageTitle = "Register as a New User";
+    // Remove logout message
+    $_SESSION['logout_msg'] = '';
 
     // Declare and clear variables for error messages
     $username_error = '';
@@ -53,7 +52,9 @@
 
         // Call validation methods for other values
         $username_error = validator\usernameValid($user->getUsername());
-        $password_error = validator\passwordValid($user->getPassword());
+        if (!isset($userNo)) {
+            $password_error = validator\passwordValid($user->getPassword());
+        }
 
         // Use validator namespace emailValid method; passing the error message by reference
         validator\emailValid($user->getUserEmail(), $email_error);
@@ -94,8 +95,8 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body class= "login_edit_body">
-    <h1 class="title">Recipe Book</h1>
+<body class="login_edit_body">
+    <h1 class="title site_title">Recipe Book</h1>
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST'>
         <h3>Username: <input type="text" name="username"
@@ -108,9 +109,9 @@
             <?php if (strlen($email_error) > 0)
                 echo "<span style='color: red;'>{$email_error}</span>"; ?>
         </h3>
-        <h3>Password: <input type="password" name="password"
-            value="<?php echo $user->getPassword(); ?>">
-            <?php if (strlen($password_error) > 0)
+        <h3>Password: <input type="password" name="password" size="30"
+            value="" placeholder="<?php if (isset($userNo)) { echo "Only enter password to change it."; } ?>">
+            <?php if (!isset($userNo) && strlen($password_error) > 0)
                 echo "<span style='color: red;'>{$password_error}</span>"; ?>
         </h3>
         <input type="hidden"
@@ -123,8 +124,10 @@
             <input type="submit" value="Cancel" name="cancelRegistration" />
         <?php }; ?>
     </form>
+    <?php if (isset($_SESSION['userNo'])) { ?>
     <form method='POST'>
         <input type="submit" value="Logout" name="logout">
     </form>
+    <?php }; ?>
 </body>
 </html>

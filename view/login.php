@@ -18,7 +18,7 @@ if (isset($_POST['username']) & isset($_POST['pw'])) {
             $_POST['username'], $_POST['pw']);
     
     // checks $is_user to verify authorized user
-    if ($userNo !== -1) {
+    if ($userNo !== -1 && $userNo !== false) {
         $_SESSION['logged_in'] = true;
         $_SESSION['userNo'] = $userNo;
         header("Location: home.php");
@@ -38,10 +38,11 @@ if (isset($_POST['register'])) {
 <html>
 <head>
     <title>Recipe Book Login</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
-<body class= "login_body">
-    <h1>Recipe Book</h1>  
+<body class="login_body">
+    <h1 class="title site_title">Recipe Book</h1>  
     <h2>Returning User? Please Login</h2>
     <form method='POST'>
         <h3>Username: <input type="text" name="username"></h3>
@@ -49,6 +50,7 @@ if (isset($_POST['register'])) {
         <input type="submit" value="Login" name="login">
     </form>
     <h2><?php echo $login_msg; ?></h2>
+    <h3><a href="home.php">Home</a></h3>
     <form method='POST'>
         <input type="submit" value="New User?" name="register" />
     </form>

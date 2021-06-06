@@ -156,7 +156,7 @@ if (isset($_POST['save'])) {
         } else {
             // update recipe
             Controller\RecipeController::updateRecipe($recipe);
-             // Go to updated recipe
+            // Go to updated recipe
             header('Location: ./single_recipe.php?recipeNo=' . $recipe->getRecipeNo());
         }
     }
@@ -183,7 +183,7 @@ if (isset($_POST['cancel'])) {
 </head>
 
 <body class= "add_update_recipe_body">
-    <h1 class="title">Recipe Book</h1>
+    <h1 class="title site_title">Recipe Book</h1>
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST' enctype="multipart/form-data">
         <h3>Recipe Name: <input type="text" name="recipeName" value="<?php echo $recipe->getRecipeName(); ?>">
@@ -228,30 +228,21 @@ if (isset($_POST['cancel'])) {
             <?php if (strlen($is_public_error) > 0)
                 echo "<span style='color: red;'>{$is_public_error}</span>"; ?>
         </h3>
-        <h3>Image File:
+        <h3 class="imgField">Image File:
             <input type="text" name="imgFile" id="imgFile" value="<?php echo $recipe->getImgFile(); ?>" readonly />
-            <label for="imgFileSelect">Click to select file</label>
+            <label for="imgFileSelect" id="imgUploadLabel">Click to select file</label>
             <input type="file" name="imgFileSelect" id="imgFileSelect" accept="image/*">
             <?php if (strlen($image_error) > 0) {
                 echo "<span style='color: red;'>{$image_error}</span>"; ?>
                 <input type="submit" id="clearImageError" name="clear" value="Clear" />
             <?php }; ?>
         </h3>
-        <h3>Directions:  <?php if (strlen($recipe_steps_error) > 0)
-            echo "<span style='color: red;'>{$recipe_steps_error}</span>"; ?></h3>
-            <textarea rows="5" columns="10" type="text" name="recipeSteps">
+        <h3>Directions: <?php if (strlen($recipe_steps_error) > 0)
+                            echo "<span style='color: red;'>{$recipe_steps_error}</span>"; ?></h3>
+        <textarea rows="5" columns="10" type="text" name="recipeSteps">
             <?php echo $recipe->getRecipeSteps(); ?>
             </textarea>
         <br /><br />
-        <!-- <h3>Level: <select name="userLevelOption">
-            <//?php foreach($user_levels as $user_level) : ?>
-                <option value="<//?php echo $user_level->getUserLevelNo(); ?>"
-                    <//?php if ($user_level->getUserLevelNo() === $user->getUserLevel()->getUserLevelNo()) {
-                        echo 'selected'; }?>>
-                <//?php echo $user_level->getLevelName(); ?></option>
-            <//?php endforeach ?>
-            </select>
-        </h3>         -->
         <input type="hidden" value="<?php echo $recipe->getRecipeNo(); ?>" name="recipeNo">
         <input type="submit" value="Save" name="save">
         <input type="submit" value="Cancel" name="cancel">

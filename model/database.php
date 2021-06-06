@@ -1,13 +1,13 @@
 <?php
 namespace Models;
-//Wayland's change
+
 class Database {
     // DB connection parameters
     private $host = 'recipebookecpi.c47mokqvnpkx.us-east-1.rds.amazonaws.com';
     private $dbname = 'recipeBook';
     private $username = 'recipebook';
     private $password = 'ecpi2021';
-    
+
     // private $host = 'localhost';
     // private $dbname = 'recipeBook';
     // private $username = 'RB_user';

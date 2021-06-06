@@ -9,7 +9,7 @@ CREATE TABLE users (
   UserNo int(11) AUTO_INCREMENT PRIMARY KEY,
   Username varchar(20) NOT NULL,
   UserEmail varchar(50) NOT NULL,
-  UserPassword varchar(50) NOT NULL
+  UserPassword varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Data for table 'users'

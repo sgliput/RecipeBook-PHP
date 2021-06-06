@@ -14,19 +14,24 @@ table {
     border-collapse: separate;
     border-spacing: 10px;
 }
+
 td, th {
     border: 1px dashed black;
     padding: .2em .5em .2em .5em;
     text-align: left;
 }
-.recipeBlock {
+
+.recipeBlock, .noRecipesBlock {
     border: 1px solid black;
+    border-radius: 5%;
+    background-color: sandybrown;
     height: 250px;
     width: 45%;
     margin: 5%;
     background: white;
     text-align: center;
 }
+
 .container {
     width: 80%;
     margin: 0 auto;
@@ -35,42 +40,47 @@ td, th {
     text-align: center;
     contain: content;
 }
-.home_body
-{
+
+.site_title {
+    font-size: 3em;
+}
+
+.home_body {
     background-image: url("../images/page_images/HomePage.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.login_body
-{
+
+.login_body {
     background-image: url("../images/page_images/Page2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.login_edit_body
-{
+
+.login_edit_body {
     background-image: url("../images/page_images/Page2.jpg");
     background-repeat: no-repeat;
     background-size: cover;  
 }
-.single_recipe_body
-{
+
+.single_recipe_body {
     background-image: url("../images/page_images/Page5.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.add_update_recipe_body
-{
+
+.add_update_recipe_body {
     background-image: url("../images/page_images/Page6.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.personal_recipebook_body
-{
+
+.personal_recipebook_body {
     background-image: url("../images/page_images/Page4.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 .title {
     text-align: center;
 }
@@ -101,4 +111,12 @@ td, th {
 
 #imgFileSelect {
     opacity: 0;
+}
+
+#imgUploadLabel {
+    cursor: pointer;
+}
+
+.imgField {
+    margin-left: 20%;
 }

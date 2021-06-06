@@ -5,4 +5,5 @@ Utilities\Security::checkHTTPS();
 
 $_SESSION['working_dir'] = getcwd();
 
-header('Location: view/login.php');
+header('Location: view/home.php');
+?>
