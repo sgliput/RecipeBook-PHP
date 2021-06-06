@@ -228,7 +228,7 @@ if (isset($_POST['cancel'])) {
             <?php if (strlen($is_public_error) > 0)
                 echo "<span style='color: red;'>{$is_public_error}</span>"; ?>
         </h3>
-        <h3>Image File:
+        <h3 class="imgField">Image File:
             <input type="text" name="imgFile" id="imgFile" value="<?php echo $recipe->getImgFile(); ?>" readonly />
             <label for="imgFileSelect" id="imgUploadLabel">Click to select file</label>
             <input type="file" name="imgFileSelect" id="imgFileSelect" accept="image/*">

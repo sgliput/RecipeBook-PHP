@@ -72,7 +72,7 @@ if (isset($_POST['logout'])) {
         <h1 class="recipe_title"><?php echo $recipe->getRecipeName(); ?></h1>
         <img class="recipe_img" alt="<?php echo $recipe->getRecipeName(); ?>" src="../images/200/<?php echo $recipe->getImgFile() ? $recipe->getImgFile() : 'recipeCardDefault.jpg'; ?>" />
 
-        <?php if ($recipe->getUserNo() != $userNo) {
+        <?php if (isset($userNo) && $recipe->getUserNo() != $userNo) {
               if (isset($_SESSION['userNo']) && !$saved_recipe) { ?>
             <form method='POST'>
                 <input type="submit" value="Save Recipe" name="saveRecipe" />

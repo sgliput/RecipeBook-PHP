@@ -116,3 +116,7 @@ td, th {
 #imgUploadLabel {
     cursor: pointer;
 }
+
+.imgField {
+    margin-left: 20%;
+}
