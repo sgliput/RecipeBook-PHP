@@ -34,9 +34,9 @@ if (isset($_POST['goToRecipe'])) {
 </head>
 
 <body class="personal_recipebook_body">
-    <h1 class="title site_title">Recipe Book</h1>
+    <h1 class="title site_title" style="font-family:Brush Script MT";>Recipe Book</h1>
 
-    <h1 class="title">Your Personal Recipe Book</h1>
+    <h1 class="title" style="font-family:Courier New";>Your Personal Recipe Book</h1>
     <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
 
     <table>

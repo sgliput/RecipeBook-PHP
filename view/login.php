@@ -42,8 +42,8 @@ if (isset($_POST['register'])) {
 </head>
 
 <body class="login_body">
-    <h1 class="title site_title">Recipe Book</h1>  
-    <h2>Returning User? Please Login</h2>
+    <h1 class="title site_title" style="font-family:Broadway";>Recipe Book</h1>  
+    <h2 style="font-family:Berlin Sans FB Demi";>Returning User? Please Login</h2>
     <form method='POST'>
         <h3>Username: <input type="text" name="username"></h3>
         <h3>Password: <input type="password" name="pw"></h3>
