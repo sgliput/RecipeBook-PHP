@@ -36,4 +36,10 @@ class Security {
             exit();
         }
     }
+
+    public static function enforceUser($userNo) {
+        if ($_SESSION['userNo'] != $userNo) {
+            header("Location: ../view/login_edit.php?userNo=" . $_SESSION['userNo']);
+        }
+    }
 }
