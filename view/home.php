@@ -51,12 +51,12 @@ if (isset($_POST['userEdit'])) {
 </head>
 
 <body class= "home_body">
-    <h1 class="title site_title">Recipe Book</h1>
+    <h1 class="title site_title" style="font-family:Broadway";>Recipe Book</h1>
     <?php if (isset($_SESSION['userNo'])) { ?>
         <h2><a href="./add_update_recipe.php">Add Recipe</a></h2>
     <?php }; ?>
 
-    <h1 class="title">Public Recipes</h1>
+    <h1 class="title" style="font-family:Courier New";>Public Recipes</h1>
     <form method='POST' class="searchField">
         <h3>Search: <input type="text" name="searchTerm" value="">
             <input type="submit" value="Search" name="search">

@@ -2,7 +2,7 @@ body {
     padding: 0.9em 0;
     margin: 0.5em;
     text-align: center;
-    background: rgb(78, 170, 86);
+    background: #dfad09;
     border-radius: 50%;
 }
 table {
@@ -36,7 +36,7 @@ td, th {
     width: 80%;
     margin: 0 auto;
     border: 1px solid black;
-    background: rgb(78, 170, 86);
+    background: #dfad09;
     text-align: center;
     contain: content;
 }
@@ -52,19 +52,19 @@ td, th {
 }
 
 .login_body {
-    background-image: url("../images/page_images/Page2.jpg");
+    background-image: url("../images/page_images/LoginPage.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .login_edit_body {
-    background-image: url("../images/page_images/Page2.jpg");
+    background-image: url("../images/page_images/Page3.jpg");
     background-repeat: no-repeat;
     background-size: cover;  
 }
 
 .single_recipe_body {
-    background-image: url("../images/page_images/Page5.jpg");
+    background-image: url("../images/page_images/Page4.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -76,7 +76,7 @@ td, th {
 }
 
 .personal_recipebook_body {
-    background-image: url("../images/page_images/Page4.jpg");
+    background-image: url("../images/page_images/BookPage.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
