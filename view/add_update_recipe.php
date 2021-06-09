@@ -185,7 +185,7 @@ if (isset($_POST['cancel'])) {
 </head>
 
 <body class= "add_update_recipe_body">
-    <h1 class="site_title">Recipe Book</h1>
+    <h1 class="site_title" style="font-family:Constantia">Recipe Book</h1>
 
     <nav class="navbar nav-fill navbar-expand-lg navbar-light">
         <ul class="navbar-nav mr-auto">

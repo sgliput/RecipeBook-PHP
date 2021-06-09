@@ -43,7 +43,7 @@ if (isset($_POST['register'])) {
 </head>
 
 <body class="login_body">
-    <h1 class="title site_title">Recipe Book</h1>  
+    <h1 class="site_title" style="font-family:Broadway;">Recipe Book</h1>  
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <ul class="navbar-nav unlogged_nav mr-auto">
@@ -57,7 +57,7 @@ if (isset($_POST['register'])) {
     </nav>
 
     <div class="login_container">
-    <h2>Returning User? Please Login</h2>
+    <h2 style="font-family:Berlin Sans FB Demi;">Returning User? Please Login</h2>
     <form method='POST'>
         <h6>Username: <input type="text" name="username"></h6>
         <h6>Password: <input type="password" name="pw"></h6>

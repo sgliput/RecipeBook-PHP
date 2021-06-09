@@ -37,7 +37,7 @@ if (isset($_POST['goToRecipe'])) {
 </head>
 
 <body class="personal_recipebook_body">
-    <h1 class="site_title">Recipe Book</h1>
+    <h1 class="site_title" style="font-family:Brush Script MT;">Recipe Book</h1>
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <ul class="navbar-nav mr-auto">
@@ -63,7 +63,7 @@ if (isset($_POST['goToRecipe'])) {
     </nav>
 
     <div class="personal_recipebook_container">
-        <h1 class="title">Your Personal Recipe Book</h1>
+        <h1 class="title" style="font-family:Courier New;">Your Personal Recipe Book</h1>
 
         <table>
             <?php if ($recipes) {

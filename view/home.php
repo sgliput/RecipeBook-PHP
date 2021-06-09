@@ -40,7 +40,7 @@ if (isset($_POST['goToRecipe'])) {
 </head>
 
 <body class="home_body">
-    <h1 class="site_title">Recipe Book</h1>
+    <h1 class="site_title" style="font-family:Broadway;">Recipe Book</h1>
 
     <nav class="navbar navbar-expand-lg navbar-light">
 
@@ -71,7 +71,7 @@ if (isset($_POST['goToRecipe'])) {
     </nav>
 
     <div class="home_container">
-        <h1 class="title">Public Recipes</h1>
+        <h1 class="title" style="font-family:Courier New;">Public Recipes</h1>
         <form method='POST' class="searchField">
             <h5>Search: <input type="text" name="searchTerm" value="">
                 <input type="submit" value="Search" name="search">
