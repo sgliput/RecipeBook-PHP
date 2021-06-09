@@ -161,7 +161,7 @@ td, th {
 }
 
 .recipe_title {
-    margin-bottom: 5%;
+    margin: .5em auto 5% auto;
 }
 
 .recipe_img {
