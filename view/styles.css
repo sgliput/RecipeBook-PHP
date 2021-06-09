@@ -5,12 +5,43 @@ body {
     background: #dfad09;
     border-radius: 50%;
 }
-table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin: 1em auto;
+
+.navbar {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: #dfad09;
+}
+
+.navbar-nav {
+    margin-left: 25%;
+    font-size: 1.3em;
+}
+
+.navbar-nav.unlogged_nav {
+    margin-left: 43%;
+}
+
+.nav-item {
+    padding-right: 20px;
+}
+
+.nav-item.active {
+    font-weight: bold;
+}
+
+.home_container {
     width: 80%;
     background: #dfad09;
+    margin: 1em auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-radius: 5%;
+}
+
+table {
+    width: 100%;
+    margin: 0 auto;
     border-collapse: separate;
     border-spacing: 10px;
 }
@@ -32,17 +63,61 @@ td, th {
     text-align: center;
 }
 
-.container {
+.single_recipe_container {
     width: 80%;
-    margin: 0 auto;
+    margin: 1em auto;
     border: 1px solid black;
+    border-radius: 5%;
+    background: #dfad09;
+    text-align: center;
+    contain: content;
+}
+
+.personal_recipebook_container {
+    width: 80%;
+    margin: 1em auto;
+    border: 1px solid black;
+    border-radius: 5%;
+    background: #dfad09;
+    text-align: center;
+    contain: content;
+}
+
+.login_container {
+    width: 40%;
+    margin: 1em auto;
+    border: 1px solid black;
+    border-radius: 5%;
+    background: #dfad09;
+    text-align: center;
+    contain: content;
+}
+
+.login_edit_container {
+    width: 40%;
+    margin: 1em auto;
+    border: 1px solid black;
+    border-radius: 5%;
+    background: #dfad09;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.add_update_recipe_container {
+    width: 50%;
+    margin: 1em auto;
+    border: 1px solid black;
+    border-radius: 5%;
     background: #dfad09;
     text-align: center;
     contain: content;
 }
 
 .site_title {
+    text-align: center;
     font-size: 3em;
+    color: rgb(218, 58, 30);
+    text-shadow: 2px 2px black;
 }
 
 .home_body {
@@ -82,11 +157,11 @@ td, th {
 }
 
 .title {
-    text-align: center;
+    margin: .5em auto;
 }
 
 .recipe_title {
-    margin-bottom: 5%;
+    margin: .5em auto 5% auto;
 }
 
 .recipe_img {
@@ -107,6 +182,7 @@ td, th {
 
 .searchField {
     text-align: center;
+    margin-top: 20px;
 }
 
 #imgFileSelect {
@@ -117,6 +193,6 @@ td, th {
     cursor: pointer;
 }
 
-.imgField {
-    margin-left: 20%;
+#descriptionField, #ingredient10Field {
+    margin-bottom: 5%;
 }

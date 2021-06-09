@@ -116,6 +116,7 @@ class UsersDB {
 
             // execute the prepared statement
             $stmt->execute();
+
             // return query status
             return $stmt->get_result() === TRUE;
         } else {

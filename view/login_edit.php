@@ -12,6 +12,8 @@
 
     if (isset($_SESSION['userNo'])) {
         $userNo = $_SESSION['userNo'];
+         // confirm user is authorized for the page's URL
+        Utility\Security::enforceUser($_GET['userNo']);
     }
 
     // user clicked the logout button
@@ -92,42 +94,78 @@
 <html>
 <head>
     <title>Recipe Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
 <body class="login_edit_body">
-    <h1 class="title site_title">Recipe Book</h1>
+    <h1 class="site_title">Recipe Book</h1>
+
+    <nav class="navbar nav-fill navbar-expand-lg navbar-light">
+
+        <?php if (isset($_SESSION['userNo'])) { ?>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="personal_recipebook.php">Personal Recipe Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./add_update_recipe.php">Add Recipe</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="login_edit.php?userNo=<?php echo $_SESSION['userNo']; ?>">Edit User Info</a>
+                </li>
+        <?php } else { ?>
+            <ul class="navbar-nav unlogged_nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">Log In </a>
+                </li>
+        <?php }; ?>
+            </ul>
+    </nav>
+    
+    <div class="login_edit_container">
     <h2 class="title"><?php echo $pageTitle; ?></h2>
     <form method='POST'>
-        <h3>Username: <input type="text" name="username"
+        <h6>Username: <input type="text" name="username"
             value="<?php echo $user->getUsername(); ?>">
             <?php if (strlen($username_error) > 0)
                 echo "<span style='color: red;'>{$username_error}</span>"; ?>
-        </h3>
-        <h3>E-mail Address: <input type="text" name="userEmail"
+        </h6>
+        <h6>E-mail Address: <input type="text" name="userEmail"
             value="<?php echo $user->getUserEmail(); ?>">
             <?php if (strlen($email_error) > 0)
-                echo "<span style='color: red;'>{$email_error}</span>"; ?>
-        </h3>
-        <h3>Password: <input type="password" name="password" size="30"
+                echo "<br /><span style='color: red;'>{$email_error}</span>"; ?>
+        </h6>
+        <h6>Password: <input type="password" name="password" size="30"
             value="" placeholder="<?php if (isset($userNo)) { echo "Only enter password to change it."; } ?>">
             <?php if (!isset($userNo) && strlen($password_error) > 0)
-                echo "<span style='color: red;'>{$password_error}</span>"; ?>
-        </h3>
+                echo "<br /><span style='color: red;'>{$password_error}</span>"; ?>
+        </h6>
         <input type="hidden"
             value="<?php echo $user->getUserNo(); ?>" name="userNo">
         <?php if (isset($_GET['userNo']) && isset($_SESSION['userNo'])) { ?>
-            <input type="submit" value="Save" name="save" />
-            <input type="submit" value="Cancel" name="cancelEdit" />
+            <input type="submit" class="btn btn-success" value="Save" name="save" />
+            <input type="submit" class="btn btn-danger" value="Cancel" name="cancelEdit" />
         <?php } else { ?>
-            <input type="submit" value="Register" name="save" />
-            <input type="submit" value="Cancel" name="cancelRegistration" />
+            <input type="submit" class="btn btn-success" value="Register" name="save" />
+            <input type="submit" class="btn btn-danger" value="Cancel" name="cancelRegistration" />
         <?php }; ?>
     </form>
+    </div>
     <?php if (isset($_SESSION['userNo'])) { ?>
     <form method='POST'>
-        <input type="submit" value="Logout" name="logout">
+        <input type="submit" class="btn btn-warning" value="Logout" name="logout">
     </form>
     <?php }; ?>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </html>
