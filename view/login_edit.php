@@ -54,13 +54,15 @@
 
         // Call validation methods for other values
         $username_error = validator\usernameValid($user->getUsername());
-        if (!isset($userNo)) {
+        if (!isset($userNo) && strlen($user->getPassword()) === 0) {
+            $password_error = "Required";
+        } else if (strlen($user->getPassword()) > 0) {
             $password_error = validator\passwordValid($user->getPassword());
         }
 
         // Use validator namespace emailValid method; passing the error message by reference
         validator\emailValid($user->getUserEmail(), $email_error);
-        
+
         // verify no errors exist before submitting form
         if (strlen($username_error) === 0 && strlen($email_error) === 0 && strlen($password_error) === 0) {
             // save button - perform add or update
@@ -144,8 +146,7 @@
         </h6>
         <h6>Password: <input type="password" name="password" size="30"
             value="" placeholder="<?php if (isset($userNo)) { echo "Only enter password to change it."; } ?>">
-            <?php if (!isset($userNo) && strlen($password_error) > 0)
-                echo "<br /><span style='color: red;'>{$password_error}</span>"; ?>
+            <?php echo "<br /><span style='color: red;'>{$password_error}</span>"; ?>
         </h6>
         <input type="hidden"
             value="<?php echo $user->getUserNo(); ?>" name="userNo">
