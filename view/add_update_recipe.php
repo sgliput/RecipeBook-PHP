@@ -108,13 +108,18 @@ if (isset($_POST['save'])) {
     if (!empty($_FILES['imgFileSelect']) && isset($_POST['imgFile']) && $_POST['imgFile'] != '') {
         if (Controller\RecipeController::checkImageNotPresent($_POST['imgFile'], $_POST['recipeNo'])) {
             $target = $imgDir . $_POST['imgFile'];
-            if (!file_exists($target)) {
-                move_uploaded_file($_FILES['imgFileSelect']['tmp_name'], $target);
-            }
-            try {
-                @Utility\ImageUtilities::ProcessImage($target);
-            } catch (Exception $e) {
-                $image_error = $e->getMessage();
+
+            $jpg = "jpg";
+            $jpeg = "jpeg";
+            $png = "png";
+            $length3 = strlen($jpg);
+            $length4 = strlen($jpeg);
+            if (substr_compare($target, $jpg, -$length3) === 0 || substr_compare($target, $png, -$length3) === 0 || substr_compare($target, $jpeg, -$length4) === 0) {
+                if (!file_exists($target)) {
+                    move_uploaded_file($_FILES['imgFileSelect']['tmp_name'], $target);
+                }
+            } else {
+                $image_error = "Try a different image type!";
             }
         } else {
             $image_error = "Please rename image.";
@@ -184,7 +189,7 @@ if (isset($_POST['cancel'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
 </head>
 
-<body class= "add_update_recipe_body">
+<body class="add_update_recipe_body">
     <h1 class="site_title" style="font-family:Constantia">Recipe Book</h1>
 
     <nav class="navbar nav-fill navbar-expand-lg navbar-light">
@@ -211,69 +216,69 @@ if (isset($_POST['cancel'])) {
     </nav>
 
     <div class="add_update_recipe_container">
-    <h1 class="title"><?php echo $pageTitle; ?></h1>
-    <form method='POST' enctype="multipart/form-data">
-        <h5>Recipe Name: <input type="text" name="recipeName" value="<?php echo $recipe->getRecipeName(); ?>">
-            <?php if (strlen($recipe_name_error) > 0)
-                echo "<span style='color: red;'>{$recipe_name_error}</span>"; ?>
-        </h5>
-        <h5>Cook Time: <input type="text" name="recipeCookTime" value="<?php echo $recipe->getRecipeCookTime(); ?>">
-            <?php if (strlen($recipe_cook_time_error) > 0)
-                echo "<span style='color: red;'>{$recipe_cook_time_error}</span>"; ?>
-        </h5>
-        <h5 id="descriptionField">Description: <input type="text" name="recipeDescription" value="<?php echo $recipe->getRecipeDescription(); ?>">
-            <?php if (strlen($recipe_description_error) > 0)
-                echo "<span style='color: red;'>{$recipe_description_error}</span>"; ?>
-        </h5>
-        <h5>Ingredient 1: <input type="text" name="ingredient1" value="<?php echo $recipe->getIngredient1(); ?>">
-            <?php if (strlen($ingredient1_error) > 0)
-                echo "<span style='color: red;'>{$ingredient1_error}</span>"; ?>
-        </h5>
-        <h5>Ingredient 2: <input type="text" name="ingredient2" value="<?php echo $recipe->getIngredient2(); ?>">
-            <?php if (strlen($ingredient2_error) > 0)
-                echo "<span style='color: red;'>{$ingredient2_error}</span>"; ?>
-        </h5>
-        <h5>Ingredient 3: <input type="text" name="ingredient3" value="<?php echo $recipe->getIngredient3(); ?>">
-        </h5>
-        <h5>Ingredient 4: <input type="text" name="ingredient4" value="<?php echo $recipe->getIngredient4(); ?>">
-        </h5>
-        <h5>Ingredient 5: <input type="text" name="ingredient5" value="<?php echo $recipe->getIngredient5(); ?>">
-        </h5>
-        <h5>Ingredient 6: <input type="text" name="ingredient6" value="<?php echo $recipe->getIngredient6(); ?>">
-        </h5>
-        <h5>Ingredient 7: <input type="text" name="ingredient7" value="<?php echo $recipe->getIngredient7(); ?>">
-        </h5>
-        <h5>Ingredient 8: <input type="text" name="ingredient8" value="<?php echo $recipe->getIngredient8(); ?>">
-        </h5>
-        <h5>Ingredient 9: <input type="text" name="ingredient9" value="<?php echo $recipe->getIngredient9(); ?>">
-        </h5>
-        <h5 id="ingredient10Field">Ingredient 10: <input type="text" name="ingredient10" value="<?php echo $recipe->getIngredient10(); ?>">
-        </h5>
-        <h5>Do you want this recipe to be public?
-            <input type="radio" name="isPublic" <?php if ((isset($isPublic) && $isPublic == "1") || ($recipe->getIsPublic() == "1")) echo "checked"; ?> value="1">Public
-            <input type="radio" name="isPublic" <?php if ((isset($isPublic) && $isPublic == "0") || ($recipe->getIsPublic() == "0")) echo "checked"; ?> value="0">Private
-            <?php if (strlen($is_public_error) > 0)
-                echo "<span style='color: red;'>{$is_public_error}</span>"; ?>
-        </h5>
-        <h5>Image File:
-            <input type="text" name="imgFile" id="imgFile" value="<?php echo $recipe->getImgFile(); ?>" readonly />
-            <label for="imgFileSelect" id="imgUploadLabel">Click to select file</label>
-            <input hidden type="file" name="imgFileSelect" id="imgFileSelect" accept="image/*">
-            <?php if (strlen($image_error) > 0) {
-                echo "<br /><span style='color: red;'>{$image_error}</span>"; ?>
-                <input type="submit" id="clearImageError" name="clear" value="Clear" />
-            <?php }; ?>
-        </h5>
-        <h5>Directions: <?php if (strlen($recipe_steps_error) > 0)
-                            echo "<span style='color: red;'>{$recipe_steps_error}</span>"; ?></h5>
-        <textarea rows="5" columns="10" type="text" name="recipeSteps">
+        <h1 class="title"><?php echo $pageTitle; ?></h1>
+        <form method='POST' enctype="multipart/form-data">
+            <h5>Recipe Name: <input type="text" name="recipeName" value="<?php echo $recipe->getRecipeName(); ?>">
+                <?php if (strlen($recipe_name_error) > 0)
+                    echo "<span style='color: red;'>{$recipe_name_error}</span>"; ?>
+            </h5>
+            <h5>Cook Time: <input type="text" name="recipeCookTime" value="<?php echo $recipe->getRecipeCookTime(); ?>">
+                <?php if (strlen($recipe_cook_time_error) > 0)
+                    echo "<span style='color: red;'>{$recipe_cook_time_error}</span>"; ?>
+            </h5>
+            <h5 id="descriptionField">Description: <input type="text" name="recipeDescription" value="<?php echo $recipe->getRecipeDescription(); ?>">
+                <?php if (strlen($recipe_description_error) > 0)
+                    echo "<span style='color: red;'>{$recipe_description_error}</span>"; ?>
+            </h5>
+            <h5>Ingredient 1: <input type="text" name="ingredient1" value="<?php echo $recipe->getIngredient1(); ?>">
+                <?php if (strlen($ingredient1_error) > 0)
+                    echo "<span style='color: red;'>{$ingredient1_error}</span>"; ?>
+            </h5>
+            <h5>Ingredient 2: <input type="text" name="ingredient2" value="<?php echo $recipe->getIngredient2(); ?>">
+                <?php if (strlen($ingredient2_error) > 0)
+                    echo "<span style='color: red;'>{$ingredient2_error}</span>"; ?>
+            </h5>
+            <h5>Ingredient 3: <input type="text" name="ingredient3" value="<?php echo $recipe->getIngredient3(); ?>">
+            </h5>
+            <h5>Ingredient 4: <input type="text" name="ingredient4" value="<?php echo $recipe->getIngredient4(); ?>">
+            </h5>
+            <h5>Ingredient 5: <input type="text" name="ingredient5" value="<?php echo $recipe->getIngredient5(); ?>">
+            </h5>
+            <h5>Ingredient 6: <input type="text" name="ingredient6" value="<?php echo $recipe->getIngredient6(); ?>">
+            </h5>
+            <h5>Ingredient 7: <input type="text" name="ingredient7" value="<?php echo $recipe->getIngredient7(); ?>">
+            </h5>
+            <h5>Ingredient 8: <input type="text" name="ingredient8" value="<?php echo $recipe->getIngredient8(); ?>">
+            </h5>
+            <h5>Ingredient 9: <input type="text" name="ingredient9" value="<?php echo $recipe->getIngredient9(); ?>">
+            </h5>
+            <h5 id="ingredient10Field">Ingredient 10: <input type="text" name="ingredient10" value="<?php echo $recipe->getIngredient10(); ?>">
+            </h5>
+            <h5>Do you want this recipe to be public?
+                <input type="radio" name="isPublic" <?php if ((isset($isPublic) && $isPublic == "1") || ($recipe->getIsPublic() == "1")) echo "checked"; ?> value="1">Public
+                <input type="radio" name="isPublic" <?php if ((isset($isPublic) && $isPublic == "0") || ($recipe->getIsPublic() == "0")) echo "checked"; ?> value="0">Private
+                <?php if (strlen($is_public_error) > 0)
+                    echo "<span style='color: red;'>{$is_public_error}</span>"; ?>
+            </h5>
+            <h5>Image File:
+                <input type="text" name="imgFile" id="imgFile" value="<?php echo $recipe->getImgFile(); ?>" readonly />
+                <label for="imgFileSelect" id="imgUploadLabel">Click to select file</label>
+                <input hidden type="file" name="imgFileSelect" id="imgFileSelect" accept="image/*">
+                <?php if (strlen($image_error) > 0) {
+                    echo "<br /><span style='color: red;'>{$image_error}</span>"; ?>
+                    <input type="submit" id="clearImageError" name="clear" value="Clear" />
+                <?php }; ?>
+            </h5>
+            <h5>Directions: <?php if (strlen($recipe_steps_error) > 0)
+                                echo "<span style='color: red;'>{$recipe_steps_error}</span>"; ?></h5>
+            <textarea rows="5" columns="10" type="text" name="recipeSteps">
             <?php echo $recipe->getRecipeSteps(); ?>
             </textarea>
-        <br /><br />
-        <input type="hidden" value="<?php echo $recipe->getRecipeNo(); ?>" name="recipeNo">
-        <input type="submit" class="btn btn-success" value="Save" name="save">
-        <input type="submit" class="btn btn-danger" value="Cancel" name="cancel">
-    </form>
+            <br /><br />
+            <input type="hidden" value="<?php echo $recipe->getRecipeNo(); ?>" name="recipeNo">
+            <input type="submit" class="btn btn-success" value="Save" name="save">
+            <input type="submit" class="btn btn-danger" value="Cancel" name="cancel">
+        </form>
     </div>
 
     <form method='POST'>

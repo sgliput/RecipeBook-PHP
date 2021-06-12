@@ -36,14 +36,14 @@ body {
     margin: 1em auto;
     border: 1px solid black;
     border-collapse: collapse;
-    border-radius: 5%;
+    border-radius: 2%;
 }
 
 table {
-    width: 100%;
+    width: 95%;
     margin: 0 auto;
     border-collapse: separate;
-    border-spacing: 10px;
+    border-spacing: 15px;
 }
 
 td, th {

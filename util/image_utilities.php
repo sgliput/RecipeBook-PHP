@@ -96,6 +96,6 @@ class ImageUtilities {
     // function to delete the base and associated images
     public static function DeleteImageFiles($dir, $base) {
         unlink($dir . $base);
-        unlink($dir . '200/' . $base);
+        // unlink($dir . '200/' . $base);
     }
 }

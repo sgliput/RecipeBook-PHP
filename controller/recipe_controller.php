@@ -3,9 +3,11 @@
 namespace Controllers;
 
 use Models as Model;
+use Utilities as Utility;
 
 include_once('recipe.php');
 include_once('../model/recipe_db.php');
+require_once('../util/image_utilities.php');
 
 class RecipeController
 {
@@ -201,6 +203,19 @@ class RecipeController
     // function to update a recipe's information
     public static function updateRecipe($recipe)
     {
+        $queryRes = Model\RecipeDB::getRecipe($recipe->getRecipeNo());
+
+        if ($queryRes) {
+            // this query only returns a single row, so just process it
+            $origRecipe = self::rowToRecipe($queryRes);
+            if ($origRecipe->getImgFile() != $recipe->getImgFile()) {
+                // get images directory above current working directory (views)
+                $dir = getcwd() . '/../images/';
+                Utility\ImageUtilities::DeleteImageFiles($dir, $origRecipe->getImgFile());
+            }
+        } else {
+            return false;
+        }
         return Model\RecipeDB::updateRecipe(
             $recipe->getRecipeNo(),
             $recipe->getRecipeName(),
